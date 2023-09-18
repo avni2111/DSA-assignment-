@@ -1,3 +1,4 @@
+//To create SINGLY LL and perform all operations.
 #include <stdio.h>
 #include <stdlib.h>
 
