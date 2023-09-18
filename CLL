@@ -1,0 +1,242 @@
+//To create CIRCULAR LL and perform operations.
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    struct node *prev;
+    int data;
+    struct node *next;
+};
+
+struct node *head = NULL, *ptr;
+
+void insert_start(int value)
+{
+    struct node *temp;
+    temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = value;
+    if (head == NULL)
+    {
+        head = temp;
+        head->prev = temp;
+        head->next = temp;
+    }
+    else
+    {
+        temp->next = head;
+        temp->prev = head->prev;
+        head->prev->next = temp;
+        head->prev = temp;
+        head = temp;
+    }
+}
+
+void insert_last(int value)
+{
+    struct node *temp;
+    temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = value;
+    if (head == NULL)
+    {
+        head = temp;
+        head->prev = temp;
+        head->next = temp;
+    }
+    else
+    {
+        temp->next = head;
+        temp->prev = head->prev;
+        head->prev->next = temp;
+        head->prev = temp;
+    }
+}
+
+void insert_at_specific(int value, int ele)
+{
+    struct node *temp;
+    temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = value;
+    if (head == NULL)
+    {
+        head = temp;
+        head->prev = temp;
+        head->next = temp;
+    }
+    else
+    {
+        ptr = head;
+        while (ptr->data != ele)
+        {
+            ptr = ptr->next;
+            if (ptr == head)
+            {
+                printf("Element not found in the list.\n");
+                free(temp);
+                return;
+            }
+        }
+        temp->next = ptr->next;
+        temp->prev = ptr;
+        ptr->next->prev = temp;
+        ptr->next = temp;
+    }
+}
+
+void delete_start()
+{
+    if (head == NULL)
+    {
+        printf("List is empty\n");
+    }
+    else
+    {
+        ptr = head;
+        if (ptr->next == head)
+        {
+            head = NULL;
+        }
+        else
+        {
+            head = head->next;
+            ptr->prev->next = head;
+            head->prev = ptr->prev;
+        }
+        free(ptr);
+    }
+}
+
+void delete_last()
+{
+    if (head == NULL)
+    {
+        printf("List is empty\n");
+    }
+    else
+    {
+        ptr = head->prev;
+        if (ptr == head)
+        {
+            head = NULL;
+        }
+        else
+        {
+            head->prev = ptr->prev;
+            ptr->prev->next = head;
+        }
+        free(ptr);
+    }
+}
+
+void delete_mid(int ele)
+{
+    if (head == NULL)
+    {
+        printf("List is empty\n");
+    }
+    else
+    {
+        ptr = head;
+        while (ptr->data != ele)
+        {
+            ptr = ptr->next;
+            if (ptr == head)
+            {
+                printf("Element not found in the list.\n");
+                return;
+            }
+        }
+        ptr->prev->next = ptr->next;
+        ptr->next->prev = ptr->prev;
+        if (ptr == head)
+        {
+            head = ptr->next;
+        }
+        free(ptr);
+    }
+}
+
+void display()
+{
+    if (head == NULL)
+    {
+        printf("List is empty\n");
+    }
+    else
+    {
+        ptr = head;
+        do
+        {
+            printf("%d <->", ptr->data);
+            ptr = ptr->next;
+        } while (ptr != head);
+        printf("\n");
+    }
+}
+
+int main()
+{
+    int ch, value, ele;
+    printf("1. Insert node at start\n");
+    printf("2. Insert node at last\n");
+    printf("3. Insert node at specific position\n");
+    printf("4. Delete node at start\n");
+    printf("5. Delete node at last\n");
+    printf("6. Delete node at specific position\n");
+    printf("7. Display\n");
+    printf("8. Exit\n");
+
+    while (1)
+    {
+        printf("Enter choice: ");
+        scanf("%d", &ch);
+
+        switch (ch)
+        {
+        case 1:
+            printf("Enter the value: ");
+            scanf("%d", &value);
+            insert_start(value);
+            display();
+            break;
+        case 2:
+            printf("Enter the value: ");
+            scanf("%d", &value);
+            insert_last(value);
+            display();
+            break;
+        case 3:
+            printf("Enter the value: ");
+            scanf("%d", &value);
+            printf("Enter the element after which you want to insert: ");
+            scanf("%d", &ele);
+            insert_at_specific(value, ele);
+            display();
+            break;
+        case 4:
+            delete_start();
+            display();
+            break;
+        case 5:
+            delete_last();
+            display();
+            break;
+        case 6:
+            printf("Enter the element you want to delete: ");
+            scanf("%d", &ele);
+            delete_mid(ele);
+            display();
+            break;
+        case 7:
+            display();
+            break;
+        case 8:
+            exit(0);
+        default:
+            printf("Invalid choice\n");
+        }
+    }
+
+    return 0;
+}
+
