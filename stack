@@ -1,0 +1,93 @@
+//Implement STACK using array
+#include<stdio.h>
+#include<stdlib.h>
+#define max 5
+int a[max],top=-1;
+void push();
+void pop();
+void disp();
+int main()
+{
+    int ch;
+    printf("1. Push/Insert\n");
+    printf("2. Pop/Delete\n");
+    printf("3. Display\n");
+    printf("4. exit\n");
+    while(1)
+    {
+        printf("\n enter choice:");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+        case 1:
+            {
+                push();
+                break;
+            }
+        case 2:
+            {
+                pop();
+                break;
+            }
+        case 3:
+            {
+                display();
+                break;
+            }
+        case 4:
+            {
+                exit(0);
+            }
+        default:
+            {
+                printf("wrong choice entered");
+            }
+        }
+    }
+}
+
+void push()
+{
+    int data;
+    if(top==max-1)
+    {
+        printf("overflow of stack");
+    }
+    else
+    {
+        printf("enter the element to be pushed:");
+        scanf(" %d",&data);
+        top++;
+        a[top]=data;
+    }
+}
+
+void pop()
+{
+    if(top==-1)
+    {
+        printf("underflow");
+    }
+    else
+    {
+        printf("popped element: %d\n",a[top]);
+        top--;
+    }
+}
+
+void display()
+{
+    int i;
+    if(top>=0)
+    {
+        printf("elements:");
+        for(i=top;i>=0;i--)
+
+            printf("%d",a[i]);
+        }
+        else
+        {
+            printf("stack is empty");
+        }
+    }
+    
